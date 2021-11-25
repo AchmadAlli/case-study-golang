@@ -7,10 +7,11 @@ import (
 	"github.com/AchmadAlli/case-study-golang/service"
 )
 
+const MENU_EXIT int = 0
+
 func main() {
 	const MENU_TRANSACTION int = 1
 	const MENU_TRANSACTION_RESULT int = 2
-	const MENU_EXIT int = 0
 
 	menu := math.MaxInt8
 
@@ -43,21 +44,28 @@ func renderMenu() {
 }
 
 func handleTransaction() {
-	var productId int
+	var productId = math.MaxInt8
 	var qty int
 
-	service.ShowProducts()
-	fmt.Print("Pilih Produk : ")
-	_, err := fmt.Scanf("%d", &productId)
+	for productId != MENU_EXIT {
+		service.ShowProducts()
+		fmt.Print("Pilih Produk : ")
+		_, err := fmt.Scanf("%d", &productId)
 
-	if err != nil {
-		fmt.Println("Wrong Input")
+		if err != nil {
+			fmt.Println("Wrong Input")
+		}
+
+		if productId == 0 {
+			continue
+		}
+
+		fmt.Print("Pilih Produk : ")
+		_, _ = fmt.Scanf("%d", &qty)
+
+		product := service.GetProduct(productId)
+		service.AddToCart(product, qty)
 	}
 
-	fmt.Print("Pilih Produk : ")
-	_, _ = fmt.Scanf("%d", &qty)
-
-	product := service.GetProduct(productId)
-
-	service.AddToCart(product, qty)
+	service.ShowCarts()
 }
