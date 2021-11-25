@@ -46,6 +46,7 @@ func renderMenu() {
 func handleTransaction() {
 	var productId = math.MaxInt8
 	var qty int
+	var customer string
 
 	for productId != MENU_EXIT {
 		service.ShowProducts()
@@ -60,12 +61,15 @@ func handleTransaction() {
 			continue
 		}
 
-		fmt.Print("Pilih Produk : ")
+		fmt.Print("Jumlah Produk : ")
 		_, _ = fmt.Scanf("%d", &qty)
 
 		product := service.GetProduct(productId)
 		service.AddToCart(product, qty)
 	}
 
-	service.ShowCarts()
+	order := service.Checkout()
+	fmt.Print("Nama Pembeli : ")
+	_, _ = fmt.Scanf("%s", &customer)
+	service.AddTransaction(customer, order)
 }

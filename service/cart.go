@@ -16,7 +16,7 @@ func AddToCart(p Product, qty int) {
 	fmt.Print("Produk telah disimpan\n")
 }
 
-func ShowCarts() {
+func Checkout() []Cart {
 	var total int
 	fmt.Printf("\nberikut daftar produk yang dibeli\n")
 	fmt.Printf("%s. %s \t %s \t\t %s \t %s \n", "no", "produk", "harga", "jumlah", "total harga")
@@ -25,5 +25,17 @@ func ShowCarts() {
 		total += item.totalPrice
 	}
 
-	fmt.Printf("\n\nTotal biaya yang harus dibayar adalah : Rp %d \n\n", total)
+	fmt.Printf("\n\nTotal biaya yang harus dibayar adalah : Rp %d \n", total)
+	result := carts
+	carts = []Cart{}
+	return result
+}
+
+func GetTotalPrice(carts []Cart) int {
+	var total int
+	for _, item := range carts {
+		total += item.product.price * item.quantity
+	}
+
+	return total
 }
