@@ -1,4 +1,4 @@
-package product
+package service
 
 import "fmt"
 
@@ -35,5 +35,9 @@ func ShowProducts() {
 	for i, product := range products {
 		fmt.Printf("%d. %s \t\t %d\n", i+1, product.name, product.price)
 	}
-	fmt.Println("")
+	fmt.Println("0. selesai")
+}
+
+func GetProduct(index int) Product {
+	return products[index-1]
 }
